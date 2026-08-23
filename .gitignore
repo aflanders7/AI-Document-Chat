@@ -6,8 +6,11 @@ frontend/.next/
 backend/__pycache__/
 backend/.venv/
 backend/venv/
+backend/app/__pycache__/
+backend/app/db/__pycache__/
 
 # Environment variables
 .env
 .env.*
 !.env.example
+

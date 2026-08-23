@@ -1,5 +1,9 @@
-from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import Depends, FastAPI
+from sqlalchemy import text
+from sqlalchemy.orm import Session
+
+from app.db.database import get_db
 
 app = FastAPI(title="AI Document Chat")
 
@@ -10,6 +14,24 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/health")
+def health(db: Session = Depends(get_db)):
+    result = db.execute(text("SELECT 1"))
+    
+    return {
+        "status": "ok",
+        "database": result.scalar(),
+    }
+
+from app.db.models import Workspace
+
+
+@app.get("/workspaces")
+def get_workspaces(db: Session = Depends(get_db)):
+    workspaces = db.query(Workspace).all()
+
+    return workspaces
 
 @app.get("/")
 def read_root():
