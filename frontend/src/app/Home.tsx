@@ -14,6 +14,7 @@ export default function Home() {
   return (
     <main>
       <h1>AI Document Chat</h1>
+      <p>Successfully logged in</p>
       <p>{message}</p>
     </main>
   );
