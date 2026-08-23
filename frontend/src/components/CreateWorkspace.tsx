@@ -5,15 +5,15 @@ import { createWorkspace } from "@/utils/api";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import router from "next/router";
+import { useRouter } from "next/navigation";
 
 
 export default function CreateWorkspace() {
   const [name, setName] = useState("");
   const { getToken } = useAuth();
+  const router = useRouter();
 
   async function handleCreateWorkspace() {
-    console.log("here");
     try {
       const token = await getToken();
       console.log(token);
@@ -22,7 +22,6 @@ export default function CreateWorkspace() {
       }
 
       const workspace = await createWorkspace(name, token);
-
       router.push(`/workspaces/${workspace.id}`);
     } catch (error) {
       console.error(error);

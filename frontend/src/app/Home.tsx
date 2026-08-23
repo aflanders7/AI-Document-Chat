@@ -20,12 +20,6 @@ export default function Home() {
             View Workspaces
           </Link>
         </Button>
-
-        <Button asChild variant="outline">
-          <Link href="/workspaces/create">
-            Create Workspace
-          </Link>
-        </Button>
       </div>
     </main>
   );
