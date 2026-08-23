@@ -66,7 +66,7 @@ export default function ChatInterface({
         </div>
       )}
 
-      <div className="flex gap-2">
+      <div className="flex flex-col gap-4">
         <Input
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
@@ -76,6 +76,7 @@ export default function ChatInterface({
         />
 
         <Button
+        className="w-fit"
           onClick={handleSubmit}
           disabled={!question.trim() || loading}
         >

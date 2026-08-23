@@ -38,7 +38,7 @@ export default function CreateWorkspace() {
         type="text"
       />
 
-      <Button onClick={handleCreateWorkspace}>
+      <Button className="w-fit" onClick={handleCreateWorkspace}>
         Create Workspace
       </Button>
     </div>

@@ -48,7 +48,7 @@ export default function FileUpload({
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <Input
         type="file"
         accept=".pdf,.txt,.md"
@@ -58,6 +58,7 @@ export default function FileUpload({
       />
 
       <Button
+      className="w-fit"
         onClick={handleUpload}
         disabled={!file || uploading}
       >
