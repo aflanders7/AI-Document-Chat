@@ -8,6 +8,10 @@ backend/.venv/
 backend/venv/
 backend/app/__pycache__/
 backend/app/db/__pycache__/
+__pycache__/
+*.py[cod]
+*$py.class
+*.cpython-*.pyc
 
 # Environment variables
 .env
