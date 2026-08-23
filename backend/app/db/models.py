@@ -4,6 +4,7 @@ from datetime import datetime
 from sqlalchemy import BigInteger, CheckConstraint, ForeignKey, Text, func
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from pgvector.sqlalchemy import Vector
 
 from app.db.database import Base
 
@@ -151,7 +152,10 @@ class DocumentChunk(Base):
         nullable=False,
     )
 
-    # We'll add the pgvector type when we implement embeddings.
+    embedding = mapped_column(
+        Vector(1536)
+    )
+
     metadata_: Mapped[dict | None] = mapped_column(
         "metadata",
         JSONB,

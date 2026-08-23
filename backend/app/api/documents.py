@@ -6,6 +6,8 @@ from app.core.supabase import supabase
 from app.db.database import get_db
 from app.db.models import Document, WorkspaceMember
 
+from app.rag.indexing import index_document
+
 router = APIRouter(prefix="/documents", tags=["documents"])
 
 
@@ -57,6 +59,14 @@ async def upload_document(
     db.add(document)
     db.commit()
     db.refresh(document)
+
+    chunk_count = index_document(
+        file_data=file_data,
+        document_id=document.id,
+        db=db,
+    )
+
+    document.status = "indexed"
 
     return {
         "id": str(document.id),
