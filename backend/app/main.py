@@ -3,9 +3,9 @@ from fastapi import Depends, FastAPI
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 from app.core.auth import get_current_user
-from app.db.models import Workspace, WorkspaceMember
-from app.schemas.workspace import WorkspaceCreate
 from app.db.database import get_db
+from app.api.documents import router as documents_router
+from app.api.workspaces import router as workspaces_router
 
 app = FastAPI(title="AI Document Chat")
 
@@ -17,6 +17,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(documents_router)
+app.include_router(workspaces_router)
+
 @app.get("/health")
 def health(db: Session = Depends(get_db)):
     result = db.execute(text("SELECT 1"))
@@ -25,35 +28,6 @@ def health(db: Session = Depends(get_db)):
         "status": "ok",
         "database": result.scalar(),
     }
-
-from app.db.models import Workspace
-
-
-@app.post("/workspaces")
-def create_workspace(
-    workspace_data: WorkspaceCreate,
-    db: Session = Depends(get_db),
-    user=Depends(get_current_user),
-):
-    workspace = Workspace(
-        name=workspace_data.name,
-    )
-
-    db.add(workspace)
-    db.flush()
-
-    membership = WorkspaceMember(
-        workspace_id=workspace.id,
-        user_id=user.id,
-        role="owner",
-    )
-
-    db.add(membership)
-    db.commit()
-
-    db.refresh(workspace)
-
-    return workspace
 
 @app.get("/me")
 def get_me(user=Depends(get_current_user)):

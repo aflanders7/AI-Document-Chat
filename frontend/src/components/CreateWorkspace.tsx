@@ -5,6 +5,7 @@ import { createWorkspace } from "@/utils/api";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import router from "next/router";
 
 
 export default function CreateWorkspace() {
@@ -12,16 +13,17 @@ export default function CreateWorkspace() {
   const { getToken } = useAuth();
 
   async function handleCreateWorkspace() {
+    console.log("here");
     try {
       const token = await getToken();
-
+      console.log(token);
       if (!token) {
         throw new Error("You must be logged in");
       }
 
       const workspace = await createWorkspace(name, token);
 
-      console.log("Created:", workspace);
+      router.push(`/workspaces/${workspace.id}`);
     } catch (error) {
       console.error(error);
     }
@@ -37,7 +39,7 @@ export default function CreateWorkspace() {
         type="text"
       />
 
-      <Button type="submit" onClick={handleCreateWorkspace}>
+      <Button onClick={handleCreateWorkspace}>
         Create Workspace
       </Button>
     </div>
