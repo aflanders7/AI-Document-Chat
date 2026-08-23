@@ -36,3 +36,16 @@ export async function uploadDocument(
     body: formData,
   });
 }
+
+export async function chatWithWorkspace(
+  workspaceId: string,
+  question: string,
+  token: string
+) {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspaceId}/chat`;
+
+  return fetchWithAuth(url, token, {
+    method: "POST",
+    body: JSON.stringify({ question }),
+  });
+}

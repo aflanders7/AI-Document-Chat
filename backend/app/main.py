@@ -6,6 +6,7 @@ from app.core.auth import get_current_user
 from app.db.database import get_db
 from app.api.documents import router as documents_router
 from app.api.workspaces import router as workspaces_router
+from app.api.chat import router as chat_router
 
 app = FastAPI(title="AI Document Chat")
 
@@ -19,6 +20,7 @@ app.add_middleware(
 
 app.include_router(documents_router)
 app.include_router(workspaces_router)
+app.include_router(chat_router)
 
 @app.get("/health")
 def health(db: Session = Depends(get_db)):

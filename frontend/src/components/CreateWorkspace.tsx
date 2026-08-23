@@ -29,7 +29,7 @@ export default function CreateWorkspace() {
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
 
       <Input
         value={name}
